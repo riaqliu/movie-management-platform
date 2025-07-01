@@ -1,9 +1,15 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
+import { useStore } from 'vuex'
 
+const store = useStore();
+
+const videos = computed(() => store.state.videos);
 
 onMounted(() => {
-  console.log("the component has been mounted")
+
+  // Initial video fetch
+  if(!videos.value.length) store.dispatch('fetchVideos');
 })
 
 
