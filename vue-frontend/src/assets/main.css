@@ -8,18 +8,7 @@
 }
 
 a {
-  text-decoration: none;
-  transition: 0.4s;
-  padding: 3px;
-}
-
-.green {
-  color: hsla(160, 100%, 37%, 1);
-}
-
-a,
-.red {
-  color: #E50914
+  color: var(--nf-red);
 }
 
 
@@ -32,7 +21,6 @@ a,
 @media (min-width: 1024px) {
   body {
     display: flex;
-    place-items: center;
   }
 
   #app {
