@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HomePageCatalog from '@/components/HomePageCatalog.vue'
+  import HomePageCatalog from '@/components/HomePageCatalog.vue';
 
 </script>
 <template>
