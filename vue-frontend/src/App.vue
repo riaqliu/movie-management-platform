@@ -5,14 +5,12 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <div class="wrapper">
     <header>
-      <div class="header-wrapper">
         <nav>
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/about">About</RouterLink>
           <RouterLink to="/editor">Editor</RouterLink>
           <RouterLink to="/player">Player</RouterLink>
         </nav>
-      </div>
     </header>
 
     <RouterView />
@@ -22,6 +20,19 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped style="sass">
 body {
   display: flex;
+  flex-direction: column;
+  width: 100%;
 }
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  a {
+    padding: 4px  2rem;
+  }
+}
+
 
 </style>
