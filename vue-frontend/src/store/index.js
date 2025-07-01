@@ -1,19 +1,29 @@
 import { createStore } from 'vuex';
 
+import api from '@/lib/axios';
+
 const state = () => ({
-  videos: []
+  movies: []
 });
 
 const mutations = {
-  setVideos(state, arg) {
-    state.videos = [ arg ];
+  setMovies(state, arg) {
+    state.movies = [ arg ];
   }
 };
 
 const actions = {
-  async fetchVideos({ commit }) {
-    console.log("fetching videos");
-    commit('setVideos', []);
+  async fetchMovies({ commit }) {
+    console.info("[DEBUG] fetching movies");
+    try {
+      const response = await api.get('/movies');
+      console.log("response: ", response);
+      commit('setMovies', []);
+    } catch (err) {
+      console.error(`[DEBUG] Error occurred: ${err}`)
+    }
+
+
   },
 };
 

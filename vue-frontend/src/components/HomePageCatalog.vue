@@ -4,12 +4,12 @@ import { useStore } from 'vuex'
 
 const store = useStore();
 
-const videos = computed(() => store.state.videos);
+const videos = computed(() => store.state.movies);
 
 onMounted(() => {
 
   // Initial video fetch
-  if(!videos.value.length) store.dispatch('fetchVideos');
+  if(!videos.value.length) store.dispatch('fetchMovies');
 })
 
 
