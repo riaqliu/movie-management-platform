@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
   import HomePageCatalog from '@/components/HomePageCatalog.vue';
 
 </script>

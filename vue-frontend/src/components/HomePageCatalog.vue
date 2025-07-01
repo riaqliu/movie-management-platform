@@ -1,5 +1,5 @@
-<script setup type="ts">
-import { reactive, onMounted } from 'vue';
+<script setup>
+import { onMounted } from 'vue';
 
 
 onMounted(() => {
