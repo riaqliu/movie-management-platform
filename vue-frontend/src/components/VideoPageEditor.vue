@@ -1,7 +1,8 @@
 <script setup>
-import { defineProps, reactive, watch, ref } from 'vue'
+import { defineProps, reactive, watch, ref, defineEmits } from 'vue'
 import { useStore } from 'vuex'
 
+const emit = defineEmits(['formSubmit'])
 import VideoPlayer from './video/VideoPlayer.vue'
 
 const props = defineProps({
@@ -38,7 +39,7 @@ function handleFileChange(event) {
   form.video_file = event.target.files[0];
 }
 
-function submitForm() {
+async function submitForm() {
   errors.video_file = '';
   errors.title = '';
 
@@ -50,7 +51,8 @@ function submitForm() {
   if (hasErrors) return;
 
   form.id = props.movie.id;
-  store.dispatch('updateMovie', form);
+  await store.dispatch('updateMovie', form);
+  emit('formSubmit');
 }
 
 function removeSelectedFileHandler() {
