@@ -1,5 +1,20 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router';
+import { useStore } from 'vuex';
+import { computed, onMounted } from 'vue';
+
+
+const store = useStore();
+const hasFetchedInitially = computed(() => store.state.hasFetchedInitially);
+
+onMounted( async () => {
+  // Initial video fetch
+  if(!hasFetchedInitially.value) {
+    await store.dispatch('fetchMovies');
+    store.commit('setHasFetchedInitially', true);
+  }
+})
+
 </script>
 
 <template>

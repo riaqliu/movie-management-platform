@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -9,15 +9,6 @@ const store = useStore();
 const router = useRouter()
 
 const movies = computed(() => store.state.movies);
-const hasFetchedInitially = computed(() => store.state.hasFetchedInitially);
-
-onMounted( async () => {
-  // Initial video fetch
-  if(!hasFetchedInitially.value) {
-    await store.dispatch('fetchMovies');
-    store.commit('setHasFetchedInitially', true);
-  }
-})
 
 function thumbnailClickHandler({ id }) {
   router.push({ name: 'player', params: { id: id } })
