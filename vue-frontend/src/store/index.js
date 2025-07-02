@@ -16,7 +16,7 @@ const actions = {
   async fetchMovies({ commit }) {
     console.info("[DEBUG] fetching movies");
     try {
-      const response = await api.get('/movies');
+      const response = await api.get('/movies/');
       console.log("response: ", response);
       commit('setMovies', []);
     } catch (err) {
