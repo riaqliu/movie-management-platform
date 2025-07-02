@@ -1,11 +1,38 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref, watch, onBeforeUnmount  } from 'vue';
 
-defineProps({
+const props = defineProps({
   videoSrc: {
-    type: String,
+    type: [String, Object], // File or URL
     required: true
   }
+});
+
+const resolvedSrc = ref('')
+let objectUrl = null
+
+watch(
+  () => props.videoSrc,
+  (newValue) => {
+    if (objectUrl) {
+      URL.revokeObjectURL(objectUrl)
+      objectUrl = null
+    }
+
+    if (typeof newValue === 'string') {
+      resolvedSrc.value = newValue
+    } else if (newValue instanceof File) {
+      objectUrl = URL.createObjectURL(newValue)
+      resolvedSrc.value = objectUrl
+    } else {
+      resolvedSrc.value = ''
+    }
+  },
+  { immediate: true }
+)
+
+onBeforeUnmount(() => {
+  if (objectUrl) URL.revokeObjectURL(objectUrl)
 });
 
 function playHandler() {
@@ -19,11 +46,13 @@ function pauseHandler() {
 function endHandler() {
   console.log('ended');
 }
+
+
 </script>
 <template>
   <div class="video-player">
     <video
-      :src="videoSrc"
+      :src="resolvedSrc"
       controls
       @play="playHandler"
       @pause="pauseHandler"

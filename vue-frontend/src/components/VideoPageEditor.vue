@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps, reactive, watch, ref } from 'vue'
+import { useStore } from 'vuex'
+
 import VideoPlayer from './video/VideoPlayer.vue'
 
 const props = defineProps({
@@ -9,7 +11,8 @@ const props = defineProps({
   }
 })
 
-const videoPreviewUrl = ref('');
+const store = useStore();
+
 const videoInput = ref(null);
 
 const form = reactive({
@@ -23,15 +26,8 @@ const errors = reactive({
   video_file: ''
 })
 
-watch(() => form.video_file, (newFile) => {
+watch(() => form.video_file, () => {
   errors.video_file = '';
-  if (typeof newFile === 'string') {
-    videoPreviewUrl.value = newFile; // existing URL
-  } else if (newFile instanceof File) {
-    videoPreviewUrl.value = URL.createObjectURL(newFile) // new upload
-  } else {
-    videoPreviewUrl.value = ''
-  }
 }, { immediate: true });
 
 watch(() => form.title, () => {
@@ -52,11 +48,13 @@ function submitForm() {
   const hasErrors = Object.values(errors).some((msg) => msg !== '');
 
   if (hasErrors) return;
+
+  form.id = props.movie.id;
+  store.dispatch('updateMovie', form);
 }
 
 function removeSelectedFileHandler() {
   form.video_file = null
-  videoPreviewUrl.value = ''
   if (videoInput.value) {
     videoInput.value.value = null
   }
@@ -77,8 +75,8 @@ function removeSelectedFileHandler() {
         ref="videoInput"
       />
       <small v-if="errors.video_file" class="error">{{errors.video_file}}</small>
-      <div v-if="videoPreviewUrl" class="video-preview">
-        <VideoPlayer :video-src="videoPreviewUrl" />
+      <div v-if="form.video_file" class="video-preview">
+        <VideoPlayer :video-src="form.video_file" />
 
       </div>
       <button

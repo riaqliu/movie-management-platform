@@ -19,6 +19,13 @@ const mutations = {
     }
   },
 
+  modifyMovie(state, payload) {
+    const movie = state.movies.find(m => m.id == payload.id);
+    if (movie) {
+      Object.assign(movie, payload)
+    }
+  },
+
   setHasFetchedInitially(state, value) {
     state.hasFetchedInitially = value;
   }
@@ -42,13 +49,26 @@ const actions = {
     }
   },
 
-  // async updateMovie({ commit }, filters) {
-  //   console.info('[DEBUG] updating movie with args: ', filters);
-  //   try {
-  //   } catch (err) {
-  //     console.error(`[DEBUG] Error occurred: ${err}`);
-  //   }
-  // },
+  async updateMovie({ commit }, payload) {
+    console.info('[DEBUG] updating movie with args: ', payload);
+    try {
+      // const formData = new FormData();
+      // formData.append('id', payload.id);
+      // formData.append('title', payload.title);
+      // formData.append('description', payload.description);
+      // if (payload.video_file instanceof File) {
+      //   formData.append('video_file', payload.video_file);
+      // }
+
+      // await api.patch(`/movies/${payload.get('id')}/`, payload, {
+      //   headers: { 'Content-Type': 'multipart/form-data' }
+      // })
+
+      commit('modifyMovie', payload);
+    } catch (err) {
+      console.error(`[DEBUG] Error occurred: ${err}`);
+    }
+  },
 
   async deleteMovie({ commit }, id) {
     console.info('[DEBUG] deleting movie with args: ', id);
