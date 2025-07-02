@@ -1,6 +1,7 @@
 <script setup>
 import VideoPlayer from '@/components/video/VideoPlayer.vue';
-import { computed, onMounted } from 'vue'
+import ConfirmationModal from '@/components/_generics/ConfirmationModal.vue';
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 
@@ -8,14 +9,23 @@ const store = useStore();
 const route = useRoute();
 
 const paramId = route.params.id;
+
+const isDeleting = ref(false);
+
 const movies = computed(() => store.state.movies);
-const currentMovie = computed(() => movies.value.find((movie) => movie.id == paramId))
+const currentMovie = computed(() => movies.value.find((movie) => movie.id == paramId));
+const description = computed(
+  () => currentMovie.value.description === '' ? 'Description is empty.' : currentMovie.value.description);
 
 onMounted( async () => {
   const payload = { id: paramId };
   await store.dispatch('fetchMovies', payload);
-})
+});
 
+async function handleDeleteClick() {
+  isDeleting.value = true;
+  // await store.dispatch('deleteMovie', paramId);
+}
 
 </script>
 <template>
@@ -23,14 +33,40 @@ onMounted( async () => {
     <div class="video-container">
       <VideoPlayer
         :video-src="currentMovie.video_file"
-
       ></VideoPlayer>
+      <div class="details">
+        <h1>{{currentMovie.title}}</h1>
+        <p>{{description}}</p>
+      </div>
+      <div class="actions">
+        <button>Edit</button>
+        <button @click="handleDeleteClick">Delete</button>
+      </div>
     </div>
     <div class="recommendations-wrapper">
-    </div>
 
+    </div>
+    <ConfirmationModal/>
   </div>
 </template>
 <style scoped lang="scss">
+.video-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
 </style>

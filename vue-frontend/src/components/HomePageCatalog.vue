@@ -30,7 +30,7 @@ function thumbnailClickHandler({ id }) {
       <VideoThumbnail
         v-for="movie in movies"
         :key="movie.id"
-        :image-url="movie.thumbnail.image_file"
+        :image-url="movie?.thumbnail?.image_file"
         :title="movie.title"
         @thumbnail-click="() => thumbnailClickHandler(movie)"
       ></VideoThumbnail>

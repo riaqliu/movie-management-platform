@@ -15,6 +15,13 @@ const mutations = {
     const exists = state.movies.some(m => m.id === value.id)
     if (!exists) state.movies.push(value)
   },
+  removeMovie(state, value) {
+    const index  = state.movies.findIndex(m => m.id === value)
+    if (index !== -1) {
+      state.movies.splice(index, 1)
+    }
+  },
+
   setHasFetchedInitially(state, value) {
     state.hasFetchedInitially = value;
   }
@@ -37,6 +44,26 @@ const actions = {
 
     } catch (err) {
       console.error(`[DEBUG] Error occurred: ${err}`)
+    }
+  },
+
+  // async updateMovie({ commit }, filters) {
+  //   console.info('[DEBUG] updating movie with args: ', filters);
+  //   try {
+  //   } catch (err) {
+  //     console.error(`[DEBUG] Error occurred: ${err}`);
+  //   }
+  // },
+
+  async deleteMovie({ commit }, id) {
+    console.info('[DEBUG] updating movie with args: ', id);
+    try {
+      const URL = `/movies/${id}`;
+      await api.get(URL);
+      commit('removeMovie', id );
+
+    } catch (err) {
+      console.error(`[DEBUG] Error occurred: ${err}`);
     }
   },
 };

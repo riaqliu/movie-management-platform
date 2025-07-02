@@ -1,10 +1,11 @@
 <script setup>
 import { defineProps } from 'vue';
 
+const fallbackImage = new URL('@/assets/missing-image.png', import.meta.url).href
+
 defineProps({
   imageUrl: {
-    type: String,
-    required: true
+    type: String
   },
   title: {
     type: String,
@@ -15,7 +16,7 @@ defineProps({
 </script>
 <template>
   <div class="thumb-card" @click="$emit('thumbnailClick')">
-    <img :src="imageUrl" alt="Thumbnail" />
+    <img :src="imageUrl || fallbackImage" alt="Thumbnail" />
     <div class="title">{{ title }}</div>
   </div>
 </template>
