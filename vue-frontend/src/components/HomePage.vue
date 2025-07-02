@@ -13,6 +13,10 @@
 .home-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 h1 {

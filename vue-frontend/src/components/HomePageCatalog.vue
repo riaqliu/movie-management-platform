@@ -49,17 +49,42 @@ function thumbnailClickHandler({ id }) {
 </template>
 
 <style scoped lang="scss">
+.catalog-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+  min-height: 100vh;
+}
+
 .movies-container {
   display: flex;
-  flex-direction: row;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .catalog-action {
   display: flex;
   justify-content: center;
+  padding-top: 10vh;
+
   button {
-    padding: 10px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #2563eb;
+    }
   }
 }
 
