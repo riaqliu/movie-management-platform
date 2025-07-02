@@ -1,8 +1,16 @@
 from rest_framework import serializers
-from .models import Movie
+from .models import Movie, Thumbnail
+
+
+class ThumbSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thumbnail
+        fields = ['id', 'image_file']
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    thumbnail = ThumbSerializer(read_only=True)
+
     class Meta:
         model = Movie
         fields = '__all__'
