@@ -2,7 +2,7 @@
 import { onMounted, computed } from 'vue';
 import { useStore } from 'vuex'
 
-import VideoPlayer from '@/components/_generics/VideoPlayer.vue';
+import VideoThumbnail from '@/components/video/VideoThumbnail.vue';
 
 const store = useStore();
 
@@ -22,11 +22,12 @@ onMounted( async () => {
 <template>
   <div class="catalog-wrapper">
     <div v-if="movies?.length" class="movie-container">
-      <VideoPlayer
+      <VideoThumbnail
         v-for="movie in movies"
         :key="movie.id"
-        :video-src="movie.video_file"
-      ></VideoPlayer>
+        :image-url="movie.thumbnail.image_file"
+        :title="movie.title"
+      ></VideoThumbnail>
     </div>
     <div v-else>
       You have no movies uploaded.

@@ -4,11 +4,14 @@
 </script>
 <template>
   <main class="home-wrapper">
-    Welcome to "Netflix"
+    <h1>Home Catalog</h1>
 
     <HomePageCatalog/>
   </main>
 </template>
 <style scoped lang="scss">
+h1 {
+  text-align: center;
+}
 
 </style>
