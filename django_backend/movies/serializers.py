@@ -9,7 +9,7 @@ class ThumbSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    thumbnail = ThumbSerializer(read_only=True)
+    thumbnail = ThumbSerializer(source='thumb', read_only=True)
 
     class Meta:
         model = Movie
