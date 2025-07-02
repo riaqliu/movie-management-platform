@@ -14,7 +14,7 @@ defineProps({
 
 </script>
 <template>
-  <div class="thumb-card" @click="$emit('click')">
+  <div class="thumb-card" @click="$emit('thumbnailClick')">
     <img :src="imageUrl" alt="Thumbnail" />
     <div class="title">{{ title }}</div>
   </div>
@@ -25,7 +25,7 @@ defineProps({
   cursor: pointer;
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.2s ease;
+  transition: transform 0.1s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   background: #fff;
 
