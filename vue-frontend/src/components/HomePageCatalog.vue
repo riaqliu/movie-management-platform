@@ -1,12 +1,15 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 import VideoThumbnail from '@/components/video/VideoThumbnail.vue';
+import VideoPageCreator from '@/components/VideoPageCreator.vue';
 
 const store = useStore();
 const router = useRouter()
+
+const isCreating = ref(false);
 
 const movies = computed(() => store.state.movies);
 
@@ -31,12 +34,13 @@ function thumbnailClickHandler({ id }) {
     </div>
 
     <div class="catalog-action">
-      <button>
+      <button @click="isCreating = true">
         Add a movie?
       </button>
     </div>
-  </div>
 
+    <VideoPageCreator v-if="isCreating" @close="isCreating = false"/>
+  </div>
 </template>
 
 <style scoped lang="scss">

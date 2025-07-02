@@ -37,6 +37,7 @@ async function confimedDeleteHandler() {
     <VideoPageEditor
       v-if="isEditing"
       :movie="currentMovie"
+      is-editing
       @form-submit="isEditing = false"
     />
     <div v-else class="video-container">

@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, reactive, watch, ref, defineEmits } from 'vue'
+import { defineProps, reactive, watch, ref, defineEmits, computed } from 'vue'
 import { useStore } from 'vuex'
 
 const emit = defineEmits(['formSubmit'])
@@ -7,8 +7,10 @@ import VideoPlayer from './video/VideoPlayer.vue'
 
 const props = defineProps({
   movie: {
-    type: Object,
-    required: false
+    type: Object
+  },
+  isEditing: {
+    type: Boolean
   }
 })
 
@@ -26,6 +28,8 @@ const errors = reactive({
   title: '',
   video_file: ''
 })
+
+const pageTitleText = computed(() => props.isEditing ? 'EDITING' : 'CREATING');
 
 watch(() => form.video_file, () => {
   errors.video_file = '';
@@ -65,7 +69,7 @@ function removeSelectedFileHandler() {
 </script>
 <template>
   <div class="editor-wrapper">
-    <h1>EDITING</h1>
+    <h1>{{pageTitleText}}</h1>
 
     <div class="form-group">
       <label for="video_file">Video File</label>
