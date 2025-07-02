@@ -12,6 +12,13 @@ const mutations = {
     state.movies = list;
   },
 
+  addMovie(state, movie) {
+    const exists = state.movies.find(m => m.id == movie.id);
+    if (!exists) {
+      state.movies.push(movie);
+    }
+  },
+
   removeMovie(state, value) {
     const index  = state.movies.findIndex(m => m.id == value)
     if (index !== -1) {
@@ -67,6 +74,27 @@ const actions = {
       commit('modifyMovie', payload);
     } catch (err) {
       console.error(`[DEBUG] Error occurred: ${err}`);
+    }
+  },
+
+  async createMovie({ commit }, payload) {
+    console.info('[DEBUG] creating movie with args: ', payload);
+    try {
+      const formData = new FormData();
+      formData.append('title', payload.title);
+      formData.append('description', payload.description);
+
+      if (payload.video_file instanceof File) {
+        formData.append('video_file', payload.video_file);
+      }
+
+      const response = await api.post(`/movies/`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      commit('addMovie', response.data);
+    } catch (err) {
+      console.error(`[DEBUG] Error occurred:`, err.response?.data || err.message);
     }
   },
 

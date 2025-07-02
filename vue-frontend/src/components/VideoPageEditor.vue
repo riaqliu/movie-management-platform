@@ -19,9 +19,9 @@ const store = useStore();
 const videoInput = ref(null);
 
 const form = reactive({
-  title: props.movie.title || '',
-  description: props.movie.description || '',
-  video_file: props.movie.video_file || null
+  title: props.movie?.title || '',
+  description: props.movie?.description || '',
+  video_file: props.movie?.video_file || null
 })
 
 const errors = reactive({
@@ -54,8 +54,10 @@ async function submitForm() {
 
   if (hasErrors) return;
 
-  form.id = props.movie.id;
-  await store.dispatch('updateMovie', form);
+  if (props.isEditing) {
+    form.id = props.movie.id;
+    await store.dispatch('updateMovie', form);
+  } else await store.dispatch('createMovie', form);
   emit('formSubmit');
 }
 
@@ -93,7 +95,7 @@ function removeSelectedFileHandler() {
       >
         Remove
       </button>
-      <small>Current: {{ props.movie.video_file }}</small>
+      <small v-if="props.movie?.video_file" >Current: {{ props.movie?.video_file }}</small>
     </div>
 
     <form class="form-body" @submit.prevent="submitForm">
@@ -107,8 +109,11 @@ function removeSelectedFileHandler() {
         <label for="description">Description</label>
         <textarea id="description" v-model="form.description" placeholder="Add a description..." rows="4" />
       </div>
-
-      <button type="submit">Save</button>
+      <div class="buttons">
+        <button type="submit">Save</button>
+        <button v-if="isEditing" class="back" @click="$emit('close')">Back</button>
+        <button v-else class="close" @click="$emit('close')">Close</button>
+      </div>
     </form>
   </div>
 </template>
@@ -159,19 +164,43 @@ h1 {
   }
 }
 
-button[type='submit'] {
-  padding: 0.6rem 1.2rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  align-self: flex-start;
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 1.5rem;
 
-  &:hover {
-    background-color: #2563eb;
+  button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: flex-start;
+    color: black;
+    background-color: white;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  .close {
+    background-color: var(--nf-red-300);
+    color: white;
+    &:hover {
+      background-color: var(--nf-red-200);
+    }
+  }
+
+  button[type='submit'] {
+    background-color: #3b82f6;
+    color: white;
+    &:hover {
+      background-color: #2563eb;
+    }
   }
 }
+
+
 
 
 </style>

@@ -1,12 +1,26 @@
 <script setup>
+import { defineEmits } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const emit = defineEmits(['close']);
+
+import VideoPageEditor from '@/components/VideoPageEditor.vue';
+
+
+async function submissionHandler() {
+    await store.dispatch('fetchMovies');
+    emit('close');
+}
 
 </script>
 <template>
   <div class="modal-overlay">
     <div class="modal-content">
-      <h2>Create a Video</h2>
-      <p>VideoPageCreator content goes here...</p>
-      <button @click="$emit('close')">Close</button>
+      <VideoPageEditor
+        @close="$emit('close')"
+        @form-submit="submissionHandler"
+      />
     </div>
   </div>
 </template>
@@ -26,6 +40,7 @@
 
 .modal-content {
   background: white;
+  color: black;
   padding: 2rem;
   border-radius: 10px;
   width: 90%;
