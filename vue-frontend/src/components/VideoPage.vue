@@ -3,10 +3,11 @@ import VideoPlayer from '@/components/video/VideoPlayer.vue';
 import ConfirmationModal from '@/components/_generics/ConfirmationModal.vue';
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 
 const paramId = route.params.id;
 
@@ -22,9 +23,9 @@ onMounted( async () => {
   await store.dispatch('fetchMovies', payload);
 });
 
-async function handleDeleteClick() {
-  isDeleting.value = true;
-  // await store.dispatch('deleteMovie', paramId);
+async function confimedDeleteHandler() {
+  await store.dispatch('deleteMovie', paramId);
+  router.replace({ name: 'home' })
 }
 
 </script>
@@ -40,13 +41,19 @@ async function handleDeleteClick() {
       </div>
       <div class="actions">
         <button>Edit</button>
-        <button @click="handleDeleteClick">Delete</button>
+        <button @click="() => isDeleting = true">Delete</button>
       </div>
     </div>
     <div class="recommendations-wrapper">
 
     </div>
-    <ConfirmationModal/>
+    <ConfirmationModal
+      v-show="isDeleting"
+      class="confimationModal"
+      :message="'Do you want to delete this video?'"
+      @clickYes="confimedDeleteHandler"
+      @clickNo="() => isDeleting = false"
+    />
   </div>
 </template>
 <style scoped lang="scss">

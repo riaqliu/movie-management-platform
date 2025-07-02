@@ -16,14 +16,9 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped style="scss">
-body {
+.wrapper {
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
-
-.wrapper {
-  width: 100vw;
 }
 
 header {

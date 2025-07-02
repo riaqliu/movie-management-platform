@@ -1,5 +1,7 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
+
+defineEmits(['thumbnailClick']);
 
 const fallbackImage = new URL('@/assets/missing-image.png', import.meta.url).href
 

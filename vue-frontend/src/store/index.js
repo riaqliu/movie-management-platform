@@ -56,10 +56,10 @@ const actions = {
   // },
 
   async deleteMovie({ commit }, id) {
-    console.info('[DEBUG] updating movie with args: ', id);
+    console.info('[DEBUG] deleting movie with args: ', id);
     try {
-      const URL = `/movies/${id}`;
-      await api.get(URL);
+      const URL = `/movies/${id}/`;
+      await api.delete(URL);
       commit('removeMovie', id );
 
     } catch (err) {

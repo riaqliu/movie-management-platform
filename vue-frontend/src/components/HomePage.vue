@@ -10,6 +10,11 @@
   </main>
 </template>
 <style scoped lang="scss">
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 h1 {
   text-align: center;
 }
