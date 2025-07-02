@@ -5,15 +5,6 @@ from .models import Movie, Thumbnail
 from .tasks import generate_thumbnail_for_movie
 
 
-@receiver(post_delete, sender=Movie)
-def delete_video_file(sender, instance, **kwargs):
-    if instance.video_file and instance.video_file.path:
-        try:
-            os.remove(instance.video_file.path)
-        except FileNotFoundError:
-            pass
-
-
 @receiver(post_delete, sender=Thumbnail)
 def delete_thumb_file(sender, instance, **kwargs):
     if instance.image_file and instance.image_file.path:
