@@ -17,7 +17,7 @@ import { RouterLink, RouterView } from 'vue-router'
   </div>
 </template>
 
-<style scoped style="sass">
+<style scoped style="scss">
 body {
   display: flex;
   flex-direction: column;
