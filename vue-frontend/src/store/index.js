@@ -11,12 +11,9 @@ const mutations = {
   setMovies(state, list) {
     state.movies = list;
   },
-  addMovie(state, value) {
-    const exists = state.movies.some(m => m.id === value.id)
-    if (!exists) state.movies.push(value)
-  },
+
   removeMovie(state, value) {
-    const index  = state.movies.findIndex(m => m.id === value)
+    const index  = state.movies.findIndex(m => m.id == value)
     if (index !== -1) {
       state.movies.splice(index, 1)
     }
@@ -36,11 +33,9 @@ const actions = {
       const URL = '/movies/' + (id ?? '');
       const response = await api.get(URL);
 
-      if (response.data.length > 0) {
-        commit('setMovies', [ ...response.data ]);
-      } else {
-        commit('addMovie', response.data );
-      }
+      if (!response.data.length) return;
+
+      commit('setMovies', [ ...response.data ]);
 
     } catch (err) {
       console.error(`[DEBUG] Error occurred: ${err}`)

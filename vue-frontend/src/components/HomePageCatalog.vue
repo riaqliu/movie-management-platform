@@ -38,15 +38,29 @@ function thumbnailClickHandler({ id }) {
     <div v-else>
       You have no movies uploaded.
     </div>
+
+    <div class="catalog-action">
+      <button>
+        Add a movie?
+      </button>
+    </div>
   </div>
 
 </template>
 
-<style>
+<style scoped lang="scss">
 .movies-container {
   display: flex;
   flex-direction: row;
   gap: 12px;
+}
+
+.catalog-action {
+  display: flex;
+  justify-content: center;
+  button {
+    padding: 10px;
+  }
 }
 
 </style>

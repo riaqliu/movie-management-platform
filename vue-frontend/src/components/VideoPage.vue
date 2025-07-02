@@ -33,7 +33,7 @@ async function confimedDeleteHandler() {
   <div class="video-wrapper">
     <div class="video-container">
       <VideoPlayer
-        :video-src="currentMovie.video_file"
+        :video-src="currentMovie?.video_file"
       ></VideoPlayer>
       <div class="details">
         <h1>{{currentMovie.title}}</h1>
