@@ -1,11 +1,12 @@
 <script setup>
-import VideoPlayer from '@/components/video/VideoPlayer.vue';
-import ConfirmationModal from '@/components/_generics/ConfirmationModal.vue';
-import VideoPageEditor from '@/components/VideoPageEditor.vue';
-
 import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router'
+
+import VideoPlayer from '@/components/video/VideoPlayer.vue';
+import ConfirmationModal from '@/components/_generics/ConfirmationModal.vue';
+import VideoPageEditor from '@/components/VideoPageEditor.vue';
+import VideoThumbnail from '@/components/video/VideoThumbnail.vue';
 
 const store = useStore();
 const route = useRoute();
@@ -17,6 +18,7 @@ const isDeleting = ref(false);
 const isEditing = ref(false);
 
 const movies = computed(() => store.state.movies);
+const otherMovies = computed(() => store.state.movies.filter((movie) => movie.id != paramId));
 const currentMovie = computed(() => movies.value.find((movie) => movie.id == paramId));
 const description = computed(
   () => currentMovie.value?.description === '' ? 'Description is empty.' : currentMovie.value?.description);
@@ -31,6 +33,16 @@ async function confimedDeleteHandler() {
   router.replace({ name: 'home' })
 }
 
+function backButtonClickHandler() {
+  router.replace({ name: 'home' })
+}
+
+function thumbnailClickHandler({ id }) {
+  router.replace({ name: 'player', params: { id } }).then(() => {
+    window.location.reload(); // forces full reload
+  });
+}
+
 </script>
 <template>
   <div class="video-wrapper">
@@ -41,6 +53,7 @@ async function confimedDeleteHandler() {
       @form-submit="isEditing = false"
     />
     <div v-else class="video-container">
+      <button class="back-button" @click="backButtonClickHandler">Back</button>
       <VideoPlayer
         :video-src="currentMovie?.video_file"
       ></VideoPlayer>
@@ -52,11 +65,17 @@ async function confimedDeleteHandler() {
         <button @click="() => isEditing = true">Edit</button>
         <button @click="() => isDeleting = true">Delete</button>
       </div>
-      <div class="recommendations-wrapper">
-    </div>
-
-
-
+      <div v-if="otherMovies" class="recommendations-wrapper">
+          <VideoThumbnail
+            class="thumbnail"
+            v-for="movie in otherMovies"
+            :key="movie.id"
+            :image-url="movie?.thumbnail?.image_file"
+            :title="movie.title"
+            @thumbnail-click="() => thumbnailClickHandler(movie)"
+          ></VideoThumbnail>
+      </div>
+      <p v-else>No other movies to show</p>
     </div>
     <ConfirmationModal
       v-show="isDeleting"
@@ -108,39 +127,46 @@ async function confimedDeleteHandler() {
   }
 }
 
+
+
+button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &.back-button {
+    margin-left: auto;
+  }
+}
+
 .actions {
   display: flex;
   gap: 1rem;
+  :first-child {
+    background-color: #3b82f6;
+    color: white;
 
-  button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-
-    &:first-child {
-      background-color: #3b82f6;
-      color: white;
-
-      &:hover {
-        background-color: #2563eb;
-      }
+    &:hover {
+      background-color: #2563eb;
     }
+  }
 
-    &:last-child {
-      background-color: #ef4444;
-      color: white;
+  :last-child {
+    background-color: #ef4444;
+    color: white;
 
-      &:hover {
-        background-color: #dc2626;
-      }
+    &:hover {
+      background-color: #dc2626;
     }
   }
 }
 
 .recommendations-wrapper {
+  display: flex;
+  flex-direction: row;
   width: 100%;
   max-width: 800px;
   min-height: 100px;
@@ -148,6 +174,11 @@ async function confimedDeleteHandler() {
   border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  overflow: auto;
+
+  .thumbnail {
+    min-width: 200px;
+  }
 }
 
 .confimationModal {
