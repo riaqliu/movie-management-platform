@@ -20,7 +20,7 @@ onMounted( async () => {
 })
 
 function thumbnailClickHandler({ id }) {
-  router.push({ name: 'player', query: { id: id } })
+  router.push({ name: 'player', params: { id: id } })
 }
 
 </script>

@@ -12,17 +12,17 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/AboutView.vue'),
+      component: () => import('@/views/AboutView.vue'),
     },
     {
       path: '/editor',
       name: 'editor',
-      component: () => import('../views/EditorView.vue'),
+      component: () => import('@/views/AboutView.vue'),
     },
     {
-      path: '/player',
+      path: '/player/:id',
       name: 'player',
-      component: () => import('../views/PlayerView.vue'),
+      component: () => import('@/components/VideoPage.vue'),
     }
   ],
 })

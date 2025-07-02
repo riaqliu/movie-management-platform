@@ -11,6 +11,10 @@ const mutations = {
   setMovies(state, list) {
     state.movies = list;
   },
+  addMovie(state, value) {
+    const exists = state.movies.some(m => m.id === value.id)
+    if (!exists) state.movies.push(value)
+  },
   setHasFetchedInitially(state, value) {
     state.hasFetchedInitially = value;
   }
@@ -18,11 +22,19 @@ const mutations = {
 };
 
 const actions = {
-  async fetchMovies({ commit }) {
-    console.info("[DEBUG] fetching movies");
+  async fetchMovies({ commit }, filters = {}) {
+    console.info('[DEBUG] fetching movies with args: ', filters);
     try {
-      const response = await api.get('/movies/');
-      commit('setMovies', [ ...response.data ]);
+      const { id } = filters;
+      const URL = '/movies/' + (id ?? '');
+      const response = await api.get(URL);
+
+      if (response.data.length > 0) {
+        commit('setMovies', [ ...response.data ]);
+      } else {
+        commit('addMovie', response.data );
+      }
+
     } catch (err) {
       console.error(`[DEBUG] Error occurred: ${err}`)
     }
