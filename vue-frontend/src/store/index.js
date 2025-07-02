@@ -52,17 +52,17 @@ const actions = {
   async updateMovie({ commit }, payload) {
     console.info('[DEBUG] updating movie with args: ', payload);
     try {
-      // const formData = new FormData();
-      // formData.append('id', payload.id);
-      // formData.append('title', payload.title);
-      // formData.append('description', payload.description);
-      // if (payload.video_file instanceof File) {
-      //   formData.append('video_file', payload.video_file);
-      // }
+      const formData = new FormData();
+      formData.append('id', payload.id);
+      formData.append('title', payload.title);
+      formData.append('description', payload.description);
+      if (payload.video_file instanceof File) {
+        formData.append('video_file', payload.video_file);
+      }
 
-      // await api.patch(`/movies/${payload.get('id')}/`, payload, {
-      //   headers: { 'Content-Type': 'multipart/form-data' }
-      // })
+      await api.patch(`/movies/${payload.id}/`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
 
       commit('modifyMovie', payload);
     } catch (err) {
