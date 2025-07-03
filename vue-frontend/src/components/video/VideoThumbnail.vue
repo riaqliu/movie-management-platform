@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 
 defineEmits(['thumbnailClick']);
 
@@ -44,6 +43,7 @@ defineProps({
 
   .title {
     padding: 8px;
+    padding-bottom: 12px;
     font-size: 14px;
     text-align: left;
     font-weight: 500;

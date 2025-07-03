@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, reactive, watch, ref, defineEmits, computed } from 'vue'
+import { reactive, watch, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 
 const emit = defineEmits(['formSubmit'])
@@ -29,7 +29,7 @@ const errors = reactive({
   video_file: ''
 })
 
-const pageTitleText = computed(() => props.isEditing ? 'EDITING' : 'CREATING');
+const pageTitleText = computed(() => props.isEditing ? 'Edit your movie' : 'Upload a movie');
 
 watch(() => form.video_file, () => {
   errors.video_file = '';
@@ -110,9 +110,9 @@ function removeSelectedFileHandler() {
         <textarea id="description" v-model="form.description" placeholder="Add a description..." rows="4" />
       </div>
       <div class="buttons">
-        <button type="submit">Save</button>
         <button v-if="isEditing" class="back" @click="$emit('close')">Back</button>
         <button v-else class="close" @click="$emit('close')">Close</button>
+        <button type="submit">Save</button>
       </div>
     </form>
   </div>

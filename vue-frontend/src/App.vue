@@ -34,17 +34,31 @@ onMounted( async () => {
 .wrapper {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 header {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background-color: var(--nf-grey-850);
+  padding: 1rem 0;
 
   a {
-    padding: 4px  2rem;
+    padding: 12px 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--nf-red-200);
+    text-transform: uppercase;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-radius: 5px;
+
+    &:hover {
+      color: var(--nf-red-100);
+      border-bottom: 2px solid var(--nf-primary);
+    }
   }
 }
-
 
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   message: {
@@ -12,15 +12,31 @@ const modalMessage = computed(() => props.message);
 
 </script>
 <template>
-  <div class="confirmation-modal">
-    <h1>{{ modalMessage }}</h1>
-    <div class="modal-actions">
-      <button @click="$emit('clickYes')">Yes</button>
-      <button @click="$emit('clickNo')">No</button>
+  <div class="modal-overlay">
+    <div class="confirmation-modal">
+      <h1>{{ modalMessage }}</h1>
+      <div class="modal-actions">
+        <button @click="$emit('clickYes')">Yes</button>
+        <button @click="$emit('clickNo')">No</button>
+      </div>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 .confirmation-modal {
   position: fixed;
   top: 50%;
@@ -30,8 +46,9 @@ const modalMessage = computed(() => props.message);
   padding: 24px 32px;
   border-radius: 12px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  width: 320px;
-  max-width: 90%;
+  width: 30rem;
+  height: 10rem;
+  max-width: 80%;
   text-align: center;
   z-index: 9999;
 
@@ -45,10 +62,10 @@ const modalMessage = computed(() => props.message);
   .modal-actions {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 1rem;
 
     button {
-      padding: 8px 16px;
+      padding: 20px 32px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
