@@ -124,7 +124,7 @@ Follow these steps to manually test the application:
 
 **Demo Video**
 
-   * [Watch Demo Video](https://example.com/demo)
+   * [Watch Demo Video](https://drive.google.com/drive/folders/1KwQh2945VEeO6Foy6Xm4GgpdfdsfkK-r?usp=sharing)
 
 ---
 
