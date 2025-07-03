@@ -35,7 +35,7 @@ function thumbnailClickHandler({ id }) {
 
     <div class="catalog-action">
       <button @click="isCreating = true">
-        Add a movie?
+        Upload
       </button>
     </div>
 
