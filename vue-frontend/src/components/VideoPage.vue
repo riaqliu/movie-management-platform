@@ -75,6 +75,7 @@ function thumbnailClickHandler({ id }) {
           :key="movie.id"
           :image-url="movie?.thumbnail?.image_file"
           :title="movie.title"
+          :date="movie.date_added"
           @thumbnail-click="() => thumbnailClickHandler(movie)"
         />
       </div>

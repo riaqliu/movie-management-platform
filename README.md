@@ -8,11 +8,8 @@ A full-stack web application for managing a collection of movies. Users can uplo
 
 **Frontend**
 
-* Vue 3
-* Vuex
-* Vue Router
+* Vue
 * Axios
-* Vite
 
 **Backend**
 
@@ -29,9 +26,8 @@ Before you begin, ensure you have the following installed (all of these are assu
 
 * **Python 3.10+**
 * **Node.js (v16 or later)**
-* **npm or yarn**
-* **Redis (for Windows, Redis for Windows binaries)**
-* **Git (optional, for cloning the project)**
+* **npm**
+* **Redis**
 
 ---
 
@@ -98,21 +94,37 @@ npm run dev
 
 ## Demo Instructions
 
-To test the app manually:
+Follow these steps to manually test the application:
 
-1. **Upload a Movie File**
+### 1. **Upload a Movie File**
 
-   * Navigate to the frontend.
-   * Use the upload interface to select and upload a video file.
+* Navigate to the frontend.
+* Click the **Upload** button to open the upload interface.
+* Fill in the video details (title, description, etc.).
+* Click **Save** to upload the video to the server.
 
-2. **Video Playback**
+### 2. **Video Playback**
 
-   * After upload, the movie should appear in the list.
-   * Click the thumbnail to view and play the video.
+* After uploading, the video will appear in the catalog.
+* Videos are also displayed as a carousel on the player page.
+* Click a video thumbnail to open the player page and view the video.
 
-3. **Demo Video**
+### 3. **Edit a Video**
 
-   * [Watch Demo Video](https://example.com/demo) *(Replace with actual URL once available)*
+* On the player or catalog view, click the **Edit** button to go to the editor page.
+* Modify the video title, description, or replace the video file.
+* Click **Save** to apply changes.
+* Click **Back** to return to the previous page.
+
+### 4. **Delete a Video**
+
+* While on the editor page, click the **Delete** button.
+* Confirm deletion in the modal by clicking **Yes**.
+* The video will be removed from the catalog.
+
+**Demo Video**
+
+   * [Watch Demo Video](https://example.com/demo)
 
 ---
 
